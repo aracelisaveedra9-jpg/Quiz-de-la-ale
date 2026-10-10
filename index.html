@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fff8f0" />
+    <meta name="description" content="Pon a prueba lo que sabes sobre tipología textual en el Quiz de mi Ale." />
+    <title>Quiz de mi Ale · Tipología textual</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <audio id="backgroundMusic" src="media/quiz-mix.mp3" preload="metadata" loop hidden></audio>
+    <div class="page-glow glow-one" aria-hidden="true"></div>
+    <div class="page-glow glow-two" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Quiz de mi Ale, inicio">
+        <span class="brand-icon" aria-hidden="true">A</span>
+        <span>Quiz de <strong>mi Ale</strong></span>
+      </a>
+      <div class="header-actions">
+        <div class="header-note"><span class="sparkle" aria-hidden="true"></span> Ahi te deje una Musica para Concentrarte</div>
+        <button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false" aria-label="Activar música y sonidos">
+          <span class="sound-icon" id="soundIcon" aria-hidden="true">♫</span>
+          <span id="soundLabel">Activar música</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content" id="inicio">
+      <section class="quiz-card" aria-labelledby="page-title">
+        <!-- Pantalla inicial: se oculta cuando empieza el quiz. -->
+        <div class="screen intro-screen" id="introScreen">
+          <div class="intro-art" aria-hidden="true">
+            <span class="art-orbit orbit-a"></span>
+            <span class="art-orbit orbit-b"></span>
+            <span class="art-star star-a"></span>
+            <span class="art-star star-b"></span>
+            <span class="art-book">📚</span>
+            <span class="art-pencil">✏️</span>
+            <span class="art-speech">Hechale ganas</span>
+          </div>
+          <div class="intro-copy">
+            <p class="eyebrow"><span class="eyebrow-dot"></span> Quiz programado pa ti mujer</p>
+            <h1 id="page-title">haber cuanto repasaste <span>estos temas</span></h1>
+            <p class="intro-description">Jajaja, suerte respondiendo: tienes 15 segundos en las preguntas de selección multiple y todo el tiempo que necesites para escribir donde se te pregunte algo.</p>
+            <div class="quiz-facts" aria-label="Detalles del quiz">
+              <div class="fact"><span class="fact-icon fact-purple"></span><span><strong>Son 50 preguntas</strong><small>Son dificiles</small></span></div>
+              <div class="fact"><span class="fact-icon fact-yellow"></span><span><strong>15 segundos</strong><small>Solo selección múltiple</small></span></div>
+              <div class="fact"><span class="fact-icon fact-pink"></span><span><strong>Aver que tan rapido respondes</strong><small>Ojala perdas</small></span></div>
+            </div>
+            <button class="button button-primary start-button" id="startButton" type="button">
+              Comenzar Quiz <span aria-hidden="true">→</span>
+            </button>
+            <p class="tiny-note">Aver que tal estas en esta prueba ale, suerte</p>
+          </div>
+        </div>
+
+        <!-- Pantalla de preguntas: el contenido se inserta desde JavaScript. -->
+        <div class="screen game-screen" id="gameScreen" hidden>
+          <div class="game-topline">
+          <div class="question-count"><span class="count-dot"></span> Pregunta <strong id="questionNumber">1</strong><span class="count-divider">/</span><span id="totalQuestions">50</span></div>
+            <div class="timer" id="timer" aria-live="off"><span class="timer-icon" aria-hidden="true">◷</span><span id="timerText">Tiempo: 15s</span></div>
+          </div>
+          <div class="progress-track" role="progressbar" aria-label="Progreso del quiz" aria-valuemin="0" aria-valuemax="40" aria-valuenow="0" id="progressTrack">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="question-meta"><span class="question-type" id="questionType">Opción múltiple</span><span class="score-chip">Puntaje <strong id="scoreCount">0</strong></span></div>
+          <h2 class="question-title" id="questionText"></h2>
+          <div class="answer-area" id="answerArea"></div>
+          <p class="answer-feedback" id="answerFeedback" aria-live="polite"></p>
+        </div>
+
+        <!-- Pantalla final: muestra el resultado y permite volver a jugar. -->
+        <div class="screen result-screen" id="resultScreen" hidden>
+          <div class="result-confetti" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+          <div class="result-medal" id="resultMedal" aria-hidden="true">🏆</div>
+          <p class="eyebrow result-eyebrow">Reitero Ojala hallas perdido JAJAJAJ</p>
+          <h2 id="resultTitle">Quien sabe si lo habras logrado</h2>
+          <p class="result-description" id="resultDescription">Terminaste el quiz mujer.</p>
+          <div class="score-summary">
+            <span class="score-number" id="finalScore">0</span>
+            <span class="score-total">/ <span id="resultTotal">50</span></span>
+            <span class="score-caption">puntos obtenidos</span>
+          </div>
+          <div class="result-progress"><span id="resultPercent">0%</span><div class="result-track"><div class="result-fill" id="resultFill"></div></div></div>
+          <button class="button button-primary restart-button" id="restartButton" type="button">Jugar otra vez <span aria-hidden="true">↻</span></button>
+          <p class="tiny-note">Me mandas aver como quedaste.</p>
+        </div>
+      </section>
+      <footer class="page-footer"><span>Ojala tu siervo te ayude jajaj <span class="footer-heart"></span>Aver como te va</span><span>Hecho por el Arqui<span class="footer-sparkle"></span></span></footer>
+    </main>
+  </body>
+</html>
